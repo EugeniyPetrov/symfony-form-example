@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    {{ form_start(userSearch) }}
+        {{ form_row(userSearch.name) }}
+        {{ form_row(userSearch.email) }}
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.name }}</td>
+                        <td>{{ user.email }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {{ form_row(userSearch.page) }}
+    {{ form_end(userSearch) }}
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        $('.page-link').click(function (e) {
+            e.preventDefault();
+            var $this = $(this);
+
+            var paginatorId = $this.data('paginator-id'),
+                page = $this.data('page');
+
+            $('#' + paginatorId).val(page);
+            $this.closest('form').submit();
+        })
+    </script>
+{% endblock %}
