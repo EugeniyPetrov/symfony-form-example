@@ -35,8 +35,13 @@ class UserController extends AbstractController
     {
         $userSearch = (new UserSearch())
             ->setItemsPerPage(5);
+
+        $users = [];
         $userSearchForm = $this->createForm(UserSearchType::class, $userSearch, [
             'items_per_page' => $userSearch->getItemsPerPage(),
+            'total_count' => function () use (&$users) {
+                return count($users);
+            }
         ]);
         $userSearchForm->handleRequest($request);
 

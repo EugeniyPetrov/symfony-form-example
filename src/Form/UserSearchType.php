@@ -25,6 +25,7 @@ class UserSearchType extends AbstractType
             ])
             ->add('page', PaginatorType::class, [
                 'items_per_page' => $options['items_per_page'],
+                'total_count' => $options['total_count'],
             ])
             ->add('submit', SubmitType::class);
     }
@@ -37,6 +38,7 @@ class UserSearchType extends AbstractType
             ])
             ->setRequired([
                 'items_per_page',
+                'total_count',
             ]);
     }
 }

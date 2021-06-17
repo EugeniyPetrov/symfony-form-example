@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\User;
 use App\Entity\UserSearch;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -34,11 +35,11 @@ class UserRepository extends ServiceEntityRepository
                 ->setParameter('email', "%" . $request->getEmail() . "%");
         }
 
-        return $qb
+        $qb
             ->setMaxResults($request->getItemsPerPage())
-            ->setFirstResult(($request->getPage() - 1) * $request->getItemsPerPage())
-            ->getQuery()
-            ->getResult();
+            ->setFirstResult(($request->getPage() - 1) * $request->getItemsPerPage());
+
+        return new Paginator($qb);
     }
 
     // /**
